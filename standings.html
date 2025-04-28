@@ -48,10 +48,21 @@
       vertical-align: middle;
       margin-right: 10px;
     }
+
+    button {
+      margin: 20px;
+      padding: 10px 20px;
+      background-color: #1d3fff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <button onclick="location.href='index.html'" style="margin: 20px; padding: 10px 20px; background-color: #1d3fff; color: white; border: none; border-radius: 6px; cursor: pointer;">Back to Predictor</button>
+
+  <button onclick="location.href='index.html'">Back to Predictor</button>
 
   <h1>NHL Standings</h1>
 
@@ -65,7 +76,8 @@
         <th>Points</th>
       </tr>
     </thead>
-    <tbody></tbody>
+    <tbody>
+    </tbody>
   </table>
 
   <script>
@@ -123,13 +135,14 @@
         const tableBody = document.querySelector("#standingsTable tbody");
         data.forEach(team => {
           const corrected = nameFixMap[team.Name] || team.Name;
+          const points = (team.Wins * 2) + (team.OvertimeLosses * 1); // fixed
           const row = document.createElement("tr");
           row.innerHTML = `
             <td><img class="logo-thumb" src="${teamLogos[corrected] || ''}" alt="${corrected} logo" /> ${team.Name}</td>
             <td>${team.Wins}</td>
             <td>${team.Losses}</td>
             <td>${team.OvertimeLosses}</td>
-            <td>${team.Points}</td>
+            <td>${points}</td>
           `;
           tableBody.appendChild(row);
         });
@@ -140,5 +153,6 @@
 
     fetchStandings();
   </script>
+
 </body>
 </html>
