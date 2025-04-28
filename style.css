@@ -1,0 +1,80 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1a1f2b, #2e3a59);
+    color: white;
+    text-align: center;
+  }
+  
+  h1 {
+    margin-top: 30px;
+    font-size: 2.5em;
+  }
+  
+  input {
+    padding: 10px;
+    font-size: 1em;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f0f4ff;
+    color: #000;
+    outline: none;
+  }
+  
+  input:focus {
+    background-color: #e4ecff;
+    box-shadow: 0 0 5px rgba(0, 188, 212, 0.5);
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #00bcd4;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0097a7;
+  }
+  
+  .team-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 40px;
+  }
+  
+  .team-logo {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  
+  .vs-text {
+    font-size: 2.5em;
+    font-weight: bold;
+  }
+  
+  #result {
+    margin-top: 30px;
+    font-size: 1.8em;
+    font-weight: bold;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.5s ease-in-out;
+  }
+  
+  #result.reveal {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  

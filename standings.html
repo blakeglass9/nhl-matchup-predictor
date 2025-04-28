@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NHL Standings</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      font-size: 2.8rem;
+    }
+
+    table {
+      margin-top: 30px;
+      border-collapse: collapse;
+      width: 80%;
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #1a1a2e;
+      color: #fff;
+    }
+
+    tr:nth-child(even) {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .logo-thumb {
+      width: 24px;
+      height: 24px;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <button onclick="location.href='index.html'" style="margin: 20px; padding: 10px 20px; background-color: #1d3fff; color: white; border: none; border-radius: 6px; cursor: pointer;">Back to Predictor</button>
+
+  <h1>NHL Standings</h1>
+
+  <table id="standingsTable">
+    <thead>
+      <tr>
+        <th>Team</th>
+        <th>Wins</th>
+        <th>Losses</th>
+        <th>OT</th>
+        <th>Points</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const teamLogos = {
+      "Anaheim Ducks": "https://loodibee.com/wp-content/uploads/nhl-anaheim-ducks-logo.png",
+      "Boston Bruins": "https://loodibee.com/wp-content/uploads/nhl-boston-bruins-logo.png",
+      "Buffalo Sabres": "https://loodibee.com/wp-content/uploads/nhl-buffalo-sabres-logo.png",
+      "Calgary Flames": "https://loodibee.com/wp-content/uploads/nhl-calgary-flames-logo.png",
+      "Carolina Hurricanes": "https://loodibee.com/wp-content/uploads/nhl-carolina-hurricanes-logo.png",
+      "Chicago Blackhawks": "https://loodibee.com/wp-content/uploads/nhl-chicago-blackhawks-logo.png",
+      "Colorado Avalanche": "https://loodibee.com/wp-content/uploads/nhl-colorado-avalanche-logo.png",
+      "Columbus Blue Jackets": "https://loodibee.com/wp-content/uploads/nhl-columbus-blue-jackets-logo.png",
+      "Dallas Stars": "https://loodibee.com/wp-content/uploads/nhl-dallas-stars-logo.png",
+      "Detroit Red Wings": "https://loodibee.com/wp-content/uploads/nhl-detroit-red-wings-logo.png",
+      "Edmonton Oilers": "https://loodibee.com/wp-content/uploads/nhl-edmonton-oilers-logo.png",
+      "Florida Panthers": "https://loodibee.com/wp-content/uploads/nhl-florida-panthers-logo.png",
+      "Los Angeles Kings": "https://loodibee.com/wp-content/uploads/nhl-los-angeles-kings-logo.png",
+      "Minnesota Wild": "https://loodibee.com/wp-content/uploads/nhl-minnesota-wild-logo.png",
+      "Montreal Canadiens": "https://loodibee.com/wp-content/uploads/nhl-montreal-canadiens-logo.png",
+      "Nashville Predators": "https://loodibee.com/wp-content/uploads/nhl-nashville-predators-logo.png",
+      "New Jersey Devils": "https://loodibee.com/wp-content/uploads/nhl-new-jersey-devils-logo.png",
+      "New York Islanders": "https://loodibee.com/wp-content/uploads/nhl-new-york-islanders-logo.png",
+      "New York Rangers": "https://loodibee.com/wp-content/uploads/nhl-new-york-rangers-logo.png",
+      "Ottawa Senators": "https://loodibee.com/wp-content/uploads/nhl-ottawa-senators-logo.png",
+      "Philadelphia Flyers": "https://loodibee.com/wp-content/uploads/nhl-philadelphia-flyers-logo.png",
+      "Pittsburgh Penguins": "https://loodibee.com/wp-content/uploads/nhl-pittsburgh-penguins-logo.png",
+      "San Jose Sharks": "https://loodibee.com/wp-content/uploads/nhl-san-jose-sharks-logo.png",
+      "Seattle Kraken": "https://loodibee.com/wp-content/uploads/nhl-seattle-kraken-logo.png",
+      "St. Louis Blues": "https://loodibee.com/wp-content/uploads/nhl-st-louis-blues-logo.png",
+      "Tampa Bay Lightning": "https://loodibee.com/wp-content/uploads/nhl-tampa-bay-lightning-logo.png",
+      "Toronto Maple Leafs": "https://loodibee.com/wp-content/uploads/nhl-toronto-maple-leafs-logo.png",
+      "Utah Hockey Club": "https://loodibee.com/wp-content/uploads/NHL-Utah-Hockey-Club-Logo.png",
+      "Vancouver Canucks": "https://loodibee.com/wp-content/uploads/nhl-vancouver-canucks-logo.png",
+      "Vegas Golden Knights": "https://loodibee.com/wp-content/uploads/nhl-vegas-golden-knights-logo.png",
+      "Washington Capitals": "https://loodibee.com/wp-content/uploads/nhl-washington-capitals-logo.png",
+      "Winnipeg Jets": "https://loodibee.com/wp-content/uploads/nhl-winnipeg-jets-logo.png"
+    };
+
+    const nameFixMap = {
+      "Maple Leafs": "Toronto Maple Leafs", "Panthers": "Florida Panthers", "Lightning": "Tampa Bay Lightning", "Senators": "Ottawa Senators",
+      "Canadiens": "Montreal Canadiens", "Red Wings": "Detroit Red Wings", "Sabres": "Buffalo Sabres", "Bruins": "Boston Bruins",
+      "Capitals": "Washington Capitals", "Hurricanes": "Carolina Hurricanes", "Devils": "New Jersey Devils", "Islanders": "New York Islanders",
+      "Rangers": "New York Rangers", "Flyers": "Philadelphia Flyers", "Penguins": "Pittsburgh Penguins", "Blue Jackets": "Columbus Blue Jackets",
+      "Jets": "Winnipeg Jets", "Wild": "Minnesota Wild", "Predators": "Nashville Predators", "Blues": "St. Louis Blues",
+      "Blackhawks": "Chicago Blackhawks", "Avalanche": "Colorado Avalanche", "Stars": "Dallas Stars", "Hockey Club": "Utah Hockey Club",
+      "Oilers": "Edmonton Oilers", "Kraken": "Seattle Kraken", "Flames": "Calgary Flames", "Golden Knights": "Vegas Golden Knights",
+      "Canucks": "Vancouver Canucks", "Kings": "Los Angeles Kings", "Sharks": "San Jose Sharks", "Ducks": "Anaheim Ducks"
+    };
+
+    async function fetchStandings() {
+      const url = "https://api.sportsdata.io/v3/nhl/scores/json/Standings/2025?key=00b212fa10cb4506ab8ed805d3902ca7";
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        const tableBody = document.querySelector("#standingsTable tbody");
+        data.forEach(team => {
+          const corrected = nameFixMap[team.Name] || team.Name;
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td><img class="logo-thumb" src="${teamLogos[corrected] || ''}" alt="${corrected} logo" /> ${team.Name}</td>
+            <td>${team.Wins}</td>
+            <td>${team.Losses}</td>
+            <td>${team.OvertimeLosses}</td>
+            <td>${team.Points}</td>
+          `;
+          tableBody.appendChild(row);
+        });
+      } catch (err) {
+        console.error("Error loading standings:", err);
+      }
+    }
+
+    fetchStandings();
+  </script>
+</body>
+</html>
