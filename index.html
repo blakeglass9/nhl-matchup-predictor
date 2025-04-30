@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NHL Matchup Predictor</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
     body {
       margin: 0;
@@ -16,9 +17,21 @@
       padding: 40px 20px;
     }
 
-    h1 {
+    .title-with-gif {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       margin-bottom: 30px;
+    }
+
+    .title-with-gif h1 {
       font-size: 2.8rem;
+      margin: 0;
+    }
+
+    .title-gif {
+      height: 60px;
+      width: auto;
     }
 
     .form-container {
@@ -38,16 +51,17 @@
 
     button {
       padding: 10px 20px;
-      background-color: #1d3fff;
+      background-color: #561dff;
       color: white;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      transition: background-color 0.2s ease;
+      transition: background-color 0.2s ease, box-shadow 0.3s ease;
     }
 
     button:hover {
-      background-color: #0a2fd6;
+      background-color: #0ad66d;
+      box-shadow: 0 0 10px #0ad66d, 0 0 20px #0ad66d;
     }
 
     .logo-container {
@@ -92,38 +106,122 @@
     }
 
     .nav-buttons a button {
+      background-color: #561dff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .nav-buttons a button:hover {
+      background-color: #0ad66d;
+      box-shadow: 0 0 10px #0ad66d, 0 0 20px #0ad66d;
+    }
+
+    .video-carousel {
+      width: 100%;
+      max-width: 500px;
+      margin-top: 60px;
+      position: relative;
+      text-align: center;
+    }
+
+    .video-frame {
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .video-frame.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .dot-container {
+      margin-top: 10px;
+    }
+
+    .dot {
+      height: 10px;
+      width: 10px;
+      margin: 0 5px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .dot.active {
       background-color: #1d3fff;
+    }
+
+    .dot:hover {
+      background-color: #0ad66d;
+      transform: scale(1.2);
     }
   </style>
 </head>
 <body>
-  <h1>NHL Matchup Predictor</h1>
 
+  <!-- Title with GIF -->
+<div class="title-with-gif">
+    <h1>NHL MATCHUP PREDICTOR</h1>
+    <img src="Happy Ice Hockey Sticker by NHL.gif" alt="Stanley Cup GIF" class="title-gif" />
+  </div>  
+
+  <!-- Navigation -->
   <div class="nav-buttons">
     <a href="index.html"><button>Predictor</button></a>
     <a href="standings.html"><button>Standings</button></a>
   </div>
 
+  <!-- Predictor Form -->
   <form id="predictor-form" class="form-container">
     <select id="team1"></select>
     <select id="team2"></select>
     <button type="submit">Predict Winner</button>
   </form>
 
+  <!-- Logos -->
   <div class="logo-container">
     <img id="logo1" class="team-logo" src="" alt="" />
     <div class="vs-text">VS</div>
     <img id="logo2" class="team-logo" src="" alt="" />
   </div>
 
+  <!-- Result -->
   <h2 id="result" class="prediction-text"></h2>
+
+  <!-- Video Carousel -->
+  <div class="video-carousel">
+    <div class="video-frame active">
+      <iframe width="100%" height="250" src="https://www.youtube.com/embed/cl9mG-lTarw" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div class="video-frame">
+      <iframe width="100%" height="250" src="https://www.youtube.com/embed/R3Garhu5xHY" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div class="video-frame">
+      <iframe width="100%" height="250" src="https://www.youtube.com/embed/g0DvLezxtaE" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div class="dot-container">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
   <script src="predictor.js"></script>
   <script>
     const divisions = {
-      "Atlantic": ["Boston Bruins", "Buffalo Sabres", "Detroit Red Wings", "Florida Panthers", "Montreal Canadiens", "Ottawa Senators", "Tampa Bay Lightning", "Toronto Maple Leafs"],
-      "Metropolitan": ["Carolina Hurricanes", "Columbus Blue Jackets", "New Jersey Devils", "New York Islanders", "New York Rangers", "Philadelphia Flyers", "Pittsburgh Penguins", "Washington Capitals"],
-      "Central": ["Chicago Blackhawks", "Colorado Avalanche", "Dallas Stars", "Minnesota Wild", "Nashville Predators", "St. Louis Blues", "Utah Hockey Club", "Winnipeg Jets"],
-      "Pacific": ["Anaheim Ducks", "Calgary Flames", "Edmonton Oilers", "Los Angeles Kings", "San Jose Sharks", "Seattle Kraken", "Vancouver Canucks", "Vegas Golden Knights"]
+      Atlantic: ["Boston Bruins", "Buffalo Sabres", "Detroit Red Wings", "Florida Panthers", "Montreal Canadiens", "Ottawa Senators", "Tampa Bay Lightning", "Toronto Maple Leafs"],
+      Metropolitan: ["Carolina Hurricanes", "Columbus Blue Jackets", "New Jersey Devils", "New York Islanders", "New York Rangers", "Philadelphia Flyers", "Pittsburgh Penguins", "Washington Capitals"],
+      Central: ["Chicago Blackhawks", "Colorado Avalanche", "Dallas Stars", "Minnesota Wild", "Nashville Predators", "St. Louis Blues", "Utah Hockey Club", "Winnipeg Jets"],
+      Pacific: ["Anaheim Ducks", "Calgary Flames", "Edmonton Oilers", "Los Angeles Kings", "San Jose Sharks", "Seattle Kraken", "Vancouver Canucks", "Vegas Golden Knights"]
     };
 
     const teamLogos = {
@@ -201,8 +299,18 @@
         void result.offsetWidth;
         result.classList.add("reveal");
       });
+
+      const dots = document.querySelectorAll('.dot');
+      const frames = document.querySelectorAll('.video-frame');
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          frames.forEach(f => f.classList.remove('active'));
+          dots.forEach(d => d.classList.remove('active'));
+          frames[index].classList.add('active');
+          dot.classList.add('active');
+        });
+      });
     });
-  </script><!-- Load enhanced prediction logic -->
-<script src="predictor.js"></script>
+  </script>
 </body>
 </html>

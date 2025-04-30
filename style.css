@@ -1,80 +1,120 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #1a1f2b, #2e3a59);
+    background: linear-gradient(to bottom right, #a5c0cc, #064358, #2c5364);
     color: white;
     text-align: center;
-  }
-  
-  h1 {
+    cursor: url('http://www.rw-designer.com/cursor-extern.php?id=206376'), auto;
+}
+
+h1 {
     margin-top: 30px;
     font-size: 2.5em;
+}
+
+/* Title GIF next to header */
+.title-with-gif {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 30px;
   }
   
-  input {
+  .title-gif {
+    height: 100px;
+    width: auto;
+  }  
+
+/* Form inputs */
+input {
     padding: 10px;
     font-size: 1em;
     margin: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #f0f4ff;
+    background-color: #6b7aa5;
     color: #000;
     outline: none;
-  }
-  
-  input:focus {
+}
+
+input:focus {
     background-color: #e4ecff;
     box-shadow: 0 0 5px rgba(0, 188, 212, 0.5);
-  }
-  
-  button {
+}
+
+/* Buttons */
+button {
     padding: 10px 20px;
     font-size: 1em;
-    background-color: #00bcd4;
+    background-color: #010e29;
     border: none;
     border-radius: 5px;
     color: white;
     cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #0097a7;
-  }
-  
-  .team-logos {
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+    background-color: #00a751;
+    box-shadow: 0 0 10px #00a751, 0 0 20px #00a751;
+}
+
+/* Logo section */
+.team-logos {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 20px;
     gap: 40px;
-  }
-  
-  .team-logo {
+}
+
+.team-logo {
     width: 100px;
     height: 100px;
     object-fit: contain;
     background-color: white;
     padding: 10px;
     border-radius: 10px;
-  }
-  
-  .vs-text {
+}
+
+/* VS text */
+.vs-text {
     font-size: 2.5em;
     font-weight: bold;
-  }
-  
-  #result {
+}
+
+/* Prediction result */
+#result {
     margin-top: 30px;
     font-size: 1.8em;
     font-weight: bold;
     opacity: 0;
     transform: scale(0.8);
     transition: all 0.5s ease-in-out;
-  }
-  
-  #result.reveal {
+}
+
+#result.reveal {
     opacity: 1;
     transform: scale(1.1);
-  }
-  
+}
+
+/* Dot navigation hover effects */
+.dot:hover {
+    background-color: #0ad66d;
+    transform: scale(1.2);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Slide animation for video frame */
+.video-frame {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.video-frame.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
